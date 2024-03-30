@@ -1,7 +1,10 @@
 import numpy as np
 import supervision as sv
-from autodistill.detection import (CaptionOntology, DetectionBaseModel,
-                                   DetectionTargetModel)
+from autodistill.detection import (
+    CaptionOntology,
+    DetectionBaseModel,
+    DetectionTargetModel,
+)
 from ultralytics import YOLO
 
 
@@ -39,5 +42,18 @@ class YOLOv8(DetectionTargetModel):
     def predict(self, input: str, confidence=0.5) -> sv.Detections:
         return self.yolo(input, conf=confidence)
 
-    def train(self, dataset_yaml, epochs=200, device="cpu"):
-        self.yolo.train(data=dataset_yaml, epochs=epochs, device=device)
+    def train(
+        self,
+        dataset_yaml,
+        epochs=200,
+        device="cpu",
+        imgsz=None,
+        batch_size=None,
+    ):
+        self.yolo.train(
+            data=dataset_yaml,
+            epochs=epochs,
+            device=device,
+            imgsz=imgsz,
+            batch=batch_size,
+        )
